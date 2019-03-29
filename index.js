@@ -5,14 +5,16 @@ const db = require('./data/dbHelpers')
 
 const app = express()
 
-app.use(express.json(),helmet())
+app.use(express.json())
 
 app.get('/projects/:id', async (req, res) => {
     const {id} = req.params
     try{
         const project = await db.getProject(id)
+
         res.status(200).json(project)
     }catch (e) {
+        console.log(e)
         res.status(500).json('server error')
     }
 })
@@ -27,6 +29,7 @@ app.post('/projects', async (req, res) => {
         const count = await db.addProject(req.body)
         res.status(201).json(count)
     }catch (e) {
+        console.log(e)
         res.status(500).json('server error')
     }
 })
