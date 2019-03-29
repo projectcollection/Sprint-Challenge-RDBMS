@@ -10,12 +10,12 @@ exports.up = function(knex, Promise) {
 
           col.boolean('complete').defaultTo(false)
 
-      }).createTable('actions', (col) => {
+      }).createTable('tasks', (col) => {
           col.increments()
 
-          col.string('task').notNullable()
+          col.string('description').notNullable()
 
-          col.string('notes')
+          col.text('notes')
 
           col.boolean('complete').defaultTo(false)
 

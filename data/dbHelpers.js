@@ -2,11 +2,12 @@ const db = require('./db')
 
 
 const projects = 'projects'
-const tasks = 'actions'
+const tasks = 'tasks'
 
 const getProject = (id) => {
     return db(projects).where({id}).first().then(async project => {
-        const tasksList = await db(tasks).where({project_id: id}).select('id', 'task', 'notes', 'complete')
+        if(!project) return
+        const tasksList = await db(tasks).where({project_id: id}).select('id', 'description', 'notes', 'complete')
         return  {
             ...project,
             tasks: tasksList
@@ -15,8 +16,7 @@ const getProject = (id) => {
 }
 
 const addTask = (taskData) => {
-    console.log(taskData)
-    return db('actions').insert(taskData)
+    return db(tasks).insert(taskData)
 }
 
 const addProject = (projectData) => {
